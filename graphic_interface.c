@@ -1,3 +1,0 @@
-/*
-ya rien frere :u:
-*/
