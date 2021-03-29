@@ -26,45 +26,95 @@ int main(int argc, char *argv[])
         SDL_ExitWithError("creation du rendu echouee");
 
     SDL_Rect carte;
-    rectangle.x = 25;
-    rectangle.y = 25;
-    rectangle.w = 50;
-    rectangle.h = 75;
+    carte.x = 25;
+    carte.y = 25;
+    carte.w = 50;
+    carte.h = 75;
+
+    SDL_Rect carte2;
+    carte2.x = 25;
+    carte2.y = 125;
+    carte2.w = 50;
+    carte2.h = 75;
+
+    SDL_Rect carte3;
+    carte3.x = 25;
+    carte3.y = 225;
+    carte3.w = 50;
+    carte3.h = 75;
+
+    SDL_Rect carte4;
+    carte4.x = 25;
+    carte4.y = 325;
+    carte4.w = 50;
+    carte4.h = 75;
+
+    SDL_Rect carte5;
+    carte5.x = 100;
+    carte5.y = 450;
+    carte5.w = 50;
+    carte5.h = 75;
+
+    SDL_Rect carte6;
+    carte6.x = 175;
+    carte6.y = 450;
+    carte6.w = 50;
+    carte6.h = 75;
+
+    SDL_Rect carte7;
+    carte7.x = 250;
+    carte7.y = 450;
+    carte7.w = 50;
+    carte7.h = 75;
+
+    SDL_Rect carte8;
+    carte8.x = 325;
+    carte8.y = 450;
+    carte8.w = 50;
+    carte8.h = 75;
 
     SDL_Rect background;
-    rectangle.x = 0;
-    rectangle.y = 0;
-    rectangle.w = 475;
-    rectangle.h = 550;
+    background.x = 0;
+    background.y = 0;
+    background.w = 475;
+    background.h = 550;
 
     SDL_Rect la_main;
-    rectangle.x = 0;
-    rectangle.y = 425;
-    rectangle.w = 475;
-    rectangle.h = 125;
+    la_main.x = 0;
+    la_main.y = 425;
+    la_main.w = 475;
+    la_main.h = 125;
 
     if(SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE) != 0)
         SDL_ExitWithError("Impossible de changer la couleur du rendu");
-
     if(SDL_RenderFillRect(renderer, &background) != 0)
         SDL_ExitWithError("Impossible de dessiner un rectangle");
 
     if(SDL_SetRenderDrawColor(renderer, 0, 128, 0, SDL_ALPHA_OPAQUE) != 0)
         SDL_ExitWithError("Impossible de changer la couleur du rendu");
-
     if(SDL_RenderFillRect(renderer, &la_main) != 0)
         SDL_ExitWithError("Impossible de dessiner un rectangle");
 
     if(SDL_SetRenderDrawColor(renderer, 0, 128, 192, SDL_ALPHA_OPAQUE) != 0)
         SDL_ExitWithError("Impossible de changer la couleur du rendu");
-
     if(SDL_RenderFillRect(renderer, &carte) != 0)
+        SDL_ExitWithError("Impossible de dessiner un rectangle");
+    if(SDL_RenderFillRect(renderer, &carte2) != 0)
+        SDL_ExitWithError("Impossible de dessiner un rectangle");
+    if(SDL_RenderFillRect(renderer, &carte3) != 0)
+        SDL_ExitWithError("Impossible de dessiner un rectangle");
+    if(SDL_RenderFillRect(renderer, &carte4) != 0)
         SDL_ExitWithError("Impossible de dessiner un rectangle");
 
     if(SDL_SetRenderDrawColor(renderer, 128, 0, 255, SDL_ALPHA_OPAQUE) != 0)
         SDL_ExitWithError("Impossible de changer la couleur du rendu");
-
-    if(SDL_RenderFillRect(renderer, &carte) != 0)
+    if(SDL_RenderFillRect(renderer, &carte5) != 0)
+        SDL_ExitWithError("Impossible de dessiner un rectangle");
+    if(SDL_RenderFillRect(renderer, &carte6) != 0)
+        SDL_ExitWithError("Impossible de dessiner un rectangle");
+    if(SDL_RenderFillRect(renderer, &carte7) != 0)
+        SDL_ExitWithError("Impossible de dessiner un rectangle");
+    if(SDL_RenderFillRect(renderer, &carte8) != 0)
         SDL_ExitWithError("Impossible de dessiner un rectangle");
 
 /*
