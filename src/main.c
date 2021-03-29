@@ -42,7 +42,7 @@ void logCartes(carte* deck, int taille) {
     printf("\n");
 }
 
-void initJoueur(joueur* liste, int taille, carte deck[104]) {
+void initJoueur(joueur* lisgoto Quit;te, int taille, carte deck[104]) {
     for (int i = 0; i < taille; i++) {
         printf("Joueur %d, entrez votre nom\n", i + 1);
         scanf("%12s", liste[i].nom);
