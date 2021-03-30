@@ -130,7 +130,6 @@ int main() {
          * Début de la manche *
          **********************/
         for (int compteurTour = 1; compteurTour <= 10; compteurTour++) {
-
             // On note les cartes jouées de chaque joueur pour déterminer l'ordre de jeu
             int* ordreJoueurs = malloc(sizeof(int) * nbJoueurs);
             for (int i = 0; i < nbJoueurs; i++) {
@@ -138,8 +137,7 @@ int main() {
             }
 
             // On demande ces cartes
-            carte* cartesJouees = malloc(sizeof(carte) * nbJoueurs);
-            int* indexCartesJouees = malloc(sizeof(int) * nbJoueurs); // On aura besoin de leur position ensuite pour les retirer de la main du joueur
+            int* indexCartesJouees = malloc(sizeof(int) * nbJoueurs); // On utilisera les index plutôt que les cartes entières pour éviter de manipuler des structures entières, et car on aura besoin des index ensuite
             for (int compteurJoueur = 1; compteurJoueur <= nbJoueurs; compteurJoueur++) {
                 joueur* j = &listeJoueurs[compteurJoueur - 1]; // On note j le joueur actuel pour éviter de devoir réécrire le nom en entier
 
@@ -159,23 +157,24 @@ int main() {
                     scanf(" %d", &indexCarte);
                     indexCarte--;
                 } while (indexCarte < 0 || indexCarte > (10 - compteurTour));
+                getchar(); // On se débarasse du \n restant après le scanf
+                
 
-                cartesJouees[compteurJoueur - 1] = j->enMain[indexCarte];
                 indexCartesJouees[compteurJoueur - 1] = indexCarte;
             }
 
-            // On trie les cartes jouées des joueurs et on trie ordreJoueurs en même temps
+            // On trie les cartes jouées des joueurs, leur index et on trie ordreJoueurs en même temps
             for (int i = 0; i < nbJoueurs - 1; i++) {
                 int minIndex = i;
                 
                 for (int j = i + 1; j < nbJoueurs; j++) {
-                    if (cartesJouees[j].valeur < cartesJouees[minIndex].valeur) minIndex = j;
+                    if (listeJoueurs[j].enMain[indexCartesJouees[j]].valeur < listeJoueurs[minIndex].enMain[indexCartesJouees[minIndex]].valeur) minIndex = j;
                 }
                 
                 if (i != minIndex) {
-                    carte tempCarte = cartesJouees[i];
-                    cartesJouees[i] = cartesJouees[minIndex];
-                    cartesJouees[minIndex] = tempCarte;
+                    int tempIndex = indexCartesJouees[i];
+                    indexCartesJouees[i] = indexCartesJouees[minIndex];
+                    indexCartesJouees[minIndex] = tempIndex;
 
                     int temp = ordreJoueurs[i];
                     ordreJoueurs[i] = ordreJoueurs[minIndex];
@@ -185,7 +184,7 @@ int main() {
 
             for (int compteurJoueur = 1; compteurJoueur <= nbJoueurs; compteurJoueur++) {
                 joueur* j = &listeJoueurs[ordreJoueurs[compteurJoueur - 1]];
-                carte* c = &cartesJouees[compteurJoueur - 1]; // La carte jouée du joueur j. On utilise le pointeur c pour éviter de devoir tout réécrire à chaque fois
+                carte* c = &(j->enMain[indexCartesJouees[compteurJoueur - 1]]); // La carte jouée du joueur j. On utilise le pointeur c pour éviter de devoir tout réécrire à chaque fois
 
                 // On vérifie que la carte choisie peut être jouée dans une série
                 int peutJouer = 0;
@@ -209,15 +208,15 @@ int main() {
                     }
 
                     // On informe le joueur de la série sur laquelle il joue
-                    printf("%s, votre carte (%d, %d) va etre jouee sur la serie %d\nAppuyez sur ENTREE pour continuer", j->nom, c->valeur, c->tete, indexSerie + 1);
-                    if (compteurJoueur == 1) getchar(); // Le premier getchar() se débarasse du \n restant après un scanf
-                    getchar(); // Le deuxième sert à attendre l'entrée utilisateur
+                    printf("%s, votre carte (%d, %d) va etre jouee sur la serie %d de derniere carte (%d, %d)\nAppuyez sur ENTREE pour continuer", j->nom, c->valeur, c->tete, indexSerie + 1, serie[indexSerie].carte.valeur, serie[indexSerie].carte.tete);
+                    getchar();
                 } else {
-                    printf("Votre carte (%d, %d) est trop faible pour etre jouee dans une des 4 series.\nVeuillez choisir la serie a recuperer (Entrez le numero de la serie)\n", c->valeur, c->tete);
+                    printf("%s, votre carte (%d, %d) est trop faible pour etre jouee dans une des 4 series.\nVeuillez choisir la serie a recuperer (Entrez le numero de la serie)\n", j->nom, c->valeur, c->tete);
                     do {
                         scanf("%d", &indexSerie);
                         indexSerie--;
                     } while (indexSerie < 0 || indexSerie > 3);
+                    getchar();
                 }
 
                 Serie* s = &serie[indexSerie];
@@ -260,6 +259,8 @@ int main() {
         for (int i = 0; i < nbJoueurs; i++) {
             printf("%s - %d points\n", listeJoueurs[i].nom, listeJoueurs[i].points);
         }
+        printf("Appuyez sur ENTREE pour continuer\n");
+        getchar();
 
         if (!fini) {
             // Initialisation du deck
